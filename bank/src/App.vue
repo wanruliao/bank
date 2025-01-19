@@ -60,7 +60,6 @@ import { RouterLink, RouterView } from 'vue-router'
 </template>
 
 <style scoped>
-@import "vue-select/dist/vue-select.css";
 .btn {
     border-radius: .25rem;
     border-width: 1px;
