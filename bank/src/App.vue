@@ -7,22 +7,19 @@ import { RouterLink, RouterView } from 'vue-router'
     <div class="mx-2 sm:mx-0 px-2">
       <span class="text-sm text-gray-400 mx-2">powered by <a href="https://5xruby.tw">5xCampus</a></span>
       <h1 class="text-4xl sm:text-5xl font-thin my-2">台灣銀行代碼查詢</h1>
-    <!-- 銀行名稱與分行名稱搜尋 -->
       <section class="flex flex-col sm:flex-row">
         <div class="flex flex-col mr-0 sm:mr-2">
           <label for="bank" class="font-bold pl-1">銀行名稱</label>
-          <select id="bank" class="mt-1 block w-full border border-gray-300 rounded-md hover:border-gray-400 focus:border-blue-400 text-lg text-gray-500 px-0.5 py-0.5">
-            <option value="" disabled selected>請輸入關鍵字或銀行代碼...</option>
-            <option >bank.name</option>
-          </select>
+          <v-select id="bank" class="mt-1 block w-full border border-gray-300 rounded-md hover:border-gray-400 focus:border-blue-400 text-lg text-gray-500 px-0.5 py-0.5">
+            
+          </v-select>
           <p class="text-sm text-gray-400 pl-1 mt-1">可使用下拉選單或直接輸入關鍵字查詢</p>
         </div>
         <div class="flex flex-col mt-2 sm:mt-0">
           <label for="branch" class="font-bold pl-1">分行名稱</label>
-          <select id="branch" class="mt-1 block w-full border border-gray-300 rounded-md hover:border-gray-400 focus:border-blue-400 text-lg text-gray-500 px-0.5 py-0.5">
-            <option value="" disabled selected>請選擇分行名稱</option>
-            <option>branch.name</option>
-          </select>
+          <v-select id="branch" class="mt-1 block w-full border border-gray-300 rounded-md hover:border-gray-400 focus:border-blue-400 text-lg text-gray-500 px-0.5 py-0.5">
+            
+          </v-select>
         </div>
       </section>
 
@@ -58,12 +55,12 @@ import { RouterLink, RouterView } from 'vue-router'
           </button>
         </footer>
       </section>
-
     </div>
   </main>
 </template>
 
 <style scoped>
+@import "vue-select/dist/vue-select.css";
 .btn {
     border-radius: .25rem;
     border-width: 1px;
