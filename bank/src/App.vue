@@ -43,6 +43,9 @@ watch(selectedBank, (newBank) => {
     }
   }
 })
+const { copy, copied } = useClipboard({
+  copiedDuring: 1000,
+});
 
 </script>
 
@@ -74,7 +77,7 @@ watch(selectedBank, (newBank) => {
             </h2>
             <p class="text-xl my-1">
               {{ `分行代碼：${selectedBranch.branchCode}` }}
-              <button class="ml-2 bg-green-500 hover:bg-green-400 text-green-50 btn">複製代碼</button>
+              <button @click="copy(selectedBranch.branchCode)" class="ml-2 bg-green-500 hover:bg-green-400 text-green-50 btn">{{ copied ? "已複製" : "複製代碼" }}</button>
             </p>
             <p class="text-xl my-1">
               {{ `地址：${selectedBranch.address}` }}
