@@ -64,22 +64,22 @@ watch(selectedBank, (newBank) => {
         </div>
       </section>
 
-      <section class="mt-4 sm:mt-2">
+      <section v-if="selectedBranch" class="mt-4 sm:mt-2">
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end px-2 py-2 bg-green-50 rounded border border-dotted border-gray-700">
           <div>
             <h2 class="text-3xl mt-1 mb-2">
-              合作金庫商業銀行(006)
-              <span class="block sm:inline">西門分行</span>
+              {{ `${selectedBank.name}(${selectedBank.bankCode}) ` }}
+              <span class="block sm:inline">{{ selectedBranch.name }}</span>
             </h2>
             <p class="text-xl my-1">
-              分行代碼：0070948
+              {{ `分行代碼：${selectedBranch.branchCode}` }}
               <button class="ml-2 bg-green-500 hover:bg-green-400 text-green-50 btn">複製代碼</button>
             </p>
             <p class="text-xl my-1">
-              地址：臺北市大安區信義路四184號1、2樓及地下一樓
+              {{ `地址：${selectedBranch.address}` }}
             </p>
             <p class="text-xl my-1">
-              電話：02-23256000
+              {{ `電話：${selectedBranch.phone}` }}
             </p>
           </div>
           <footer class="text-sm text-green-900 text-right">
@@ -88,7 +88,7 @@ watch(selectedBank, (newBank) => {
           </footer>
         </div>
         <footer class="mt-2">
-          <a href="＃" class="btn mr-1">
+          <a href="/" class="btn mr-1">
             重新查詢
           </a>
           <button class="bg-blue-500 hover:bg-blue-400 text-blue-50 btn">
