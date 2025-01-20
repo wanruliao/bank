@@ -1,16 +1,21 @@
 <script setup>
 import axios from 'axios';
-import { ref, onBeforeMount } from 'vue';
+import { ref, onMounted } from 'vue';
 
-onBeforeMount(async () => {
+const modifiedData = [];
+onMounted(async () => {
   const rawData = await axios.get("https://stat.fsc.gov.tw/FSC_OAS3_RESTORE/API/json_EXPORT?TableID=B14");
-  const replaceData = [];
+  
+  //初步整理資料
   for(const ele of rawData.data){
     const newEle = {
-      ...ele, 
-      機構名稱: ele.機構名稱.replace("股份有限公司", "").replace("有限責任", "").replace("保證責任", ""),
-    };
-    replaceData.push(newEle);
+      bankCode: ele.總機構代號,
+      branchCode: ele.機構代號,
+      name: ele.機構名稱.replace("股份有限公司", "").replace("有限責任", "").replace("保證責任", ""),
+      address: ele.地址,
+      phone: ele.電話,
+    }
+    modifiedData.push(newEle);
   }
   // console.log(replaceData);
 });
