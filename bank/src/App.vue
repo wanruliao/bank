@@ -1,6 +1,6 @@
 <script setup>
 import axios from 'axios';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 
 const modifiedData = [];
 const banksData = ref([]);
@@ -27,7 +27,21 @@ onMounted(async () => {
   banksData.value = modifiedData.filter((el) => el.branchCode === "");
 });
 
-
+//監聽銀行名稱選擇結果，篩選指定分行
+watch(selectedBank, (newBank) => {
+  if(newBank){
+    branchesData.value = [];
+    selectedBranch.value = null;
+    const newBranches = modifiedData.filter((el) => el.bankCode === newBank.bankCode && el.branchCode !== "");
+    for(const ele of newBranches){
+      const newEle = {
+        ...ele,
+        name: ele.name.replace(newBank.name, "")
+      };
+      branchesData.value.push(newEle);
+    }
+  }
+})
 
 </script>
 
