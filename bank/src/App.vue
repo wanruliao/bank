@@ -3,6 +3,11 @@ import axios from 'axios';
 import { ref, onMounted } from 'vue';
 
 const modifiedData = [];
+const banksData = ref([]);
+const selectedBank = ref(null);
+const branchesData = ref([]);
+const selectedBranch = ref(null);
+
 onMounted(async () => {
   const rawData = await axios.get("https://stat.fsc.gov.tw/FSC_OAS3_RESTORE/API/json_EXPORT?TableID=B14");
   
@@ -17,13 +22,12 @@ onMounted(async () => {
     }
     modifiedData.push(newEle);
   }
-  // console.log(replaceData);
+
+  //整理銀行名稱資料
+  banksData.value = modifiedData.filter((el) => el.branchCode === "");
 });
 
-const banks = ["bank1", "bank2", "bank3"];
-const selectedBank = null;
-const branches = ["branch1", "branch2", "branch3"];
-const selectedBranch = null;
+
 
 </script>
 
@@ -35,13 +39,13 @@ const selectedBranch = null;
       <section class="flex flex-col sm:flex-row">
         <div class="flex flex-col mr-0 sm:mr-2">
           <label for="bank" class="font-bold pl-1">銀行名稱</label>
-          <multiselect id="bank" v-model="selectedBank" :options="banks" :close-on-select="true" :clear-on-select="false" placeholder="請輸入關鍵字或銀行代碼...">
+          <multiselect id="bank" v-model="selectedBank" :options="banksData" :custom-label="(option) => `${option.bankCode} ${option.name}`" :selectLabel="''" :deselectLabel="''" :selectedLabel="''" :close-on-select="true" :clear-on-select="false" placeholder="請輸入關鍵字或銀行代碼...">
           </multiselect>
           <p class="text-sm text-gray-400 pl-1 mt-1">可使用下拉選單或直接輸入關鍵字查詢</p>
         </div>
         <div class="flex flex-col mt-2 sm:mt-0">
           <label for="branch" class="font-bold pl-1">分行名稱</label>
-          <multiselect id="branch" v-model="selectedBranch" :options="branches" placeholder="請選擇分行名稱">
+          <multiselect id="branch" v-model="selectedBranch" :options="branchesData" :custom-label="(option) => `${option.name}`" :selectLabel="''" :deselectLabel="''" :selectedLabel="''" :close-on-select="true" :clear-on-select="false" placeholder="請選擇分行名稱">
           </multiselect>
         </div>
       </section>
