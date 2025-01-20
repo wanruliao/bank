@@ -1,6 +1,7 @@
 <script setup>
 import axios from 'axios';
 import { ref, onMounted, watch } from 'vue';
+import { useClipboard } from '@vueuse/core';
 
 const modifiedData = [];
 const banksData = ref([]);
