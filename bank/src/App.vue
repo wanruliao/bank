@@ -1,5 +1,20 @@
 <script setup>
 import axios from 'axios';
+import { ref, onBeforeMount } from 'vue';
+
+onBeforeMount(async () => {
+  const rawData = await axios.get("https://stat.fsc.gov.tw/FSC_OAS3_RESTORE/API/json_EXPORT?TableID=B14");
+  const replaceData = [];
+  for(const ele of rawData.data){
+    const newEle = {
+      ...ele, 
+      機構名稱: ele.機構名稱.replace("股份有限公司", "").replace("有限責任", "").replace("保證責任", ""),
+    };
+    replaceData.push(newEle);
+  }
+  // console.log(replaceData);
+});
+
 </script>
 
 <template>
@@ -10,15 +25,15 @@ import axios from 'axios';
       <section class="flex flex-col sm:flex-row">
         <div class="flex flex-col mr-0 sm:mr-2">
           <label for="bank" class="font-bold pl-1">銀行名稱</label>
-          <v-select id="bank" class="mt-1 block w-full border border-gray-300 rounded-md hover:border-gray-400 focus:border-blue-400 text-lg text-gray-500 px-0.5 py-0.5">
-            
+          <!-- <v-select id="bank" class="mt-1 block w-full border border-gray-300 rounded-md hover:border-gray-400 focus:border-blue-400 text-lg text-gray-500 px-0.5 py-0.5"> -->
+          <v-select id="bank" placeholder="請輸入關鍵字或銀行代碼...">
           </v-select>
           <p class="text-sm text-gray-400 pl-1 mt-1">可使用下拉選單或直接輸入關鍵字查詢</p>
         </div>
-        <div class="flex flex-col mt-2 sm:mt-0">
+        <div class="flex flex-col mt-2 sm:mt-0 min-w-40">
           <label for="branch" class="font-bold pl-1">分行名稱</label>
-          <v-select id="branch" class="mt-1 block w-full border border-gray-300 rounded-md hover:border-gray-400 focus:border-blue-400 text-lg text-gray-500 px-0.5 py-0.5">
-            
+          <!-- <v-select id="branch" class="mt-1 block w-full border border-gray-300 rounded-md hover:border-gray-400 focus:border-blue-400 text-lg text-gray-500 px-0.5 py-0.5"> -->
+          <v-select id="branch" placeholder="請選擇分行名稱">
           </v-select>
         </div>
       </section>
