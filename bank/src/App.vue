@@ -15,6 +15,11 @@ onBeforeMount(async () => {
   // console.log(replaceData);
 });
 
+const banks = ["bank1", "bank2", "bank3"];
+const selectedBank = null;
+const branches = ["branch1", "branch2", "branch3"];
+const selectedBranch = null;
+
 </script>
 
 <template>
@@ -25,16 +30,14 @@ onBeforeMount(async () => {
       <section class="flex flex-col sm:flex-row">
         <div class="flex flex-col mr-0 sm:mr-2">
           <label for="bank" class="font-bold pl-1">銀行名稱</label>
-          <!-- <v-select id="bank" class="mt-1 block w-full border border-gray-300 rounded-md hover:border-gray-400 focus:border-blue-400 text-lg text-gray-500 px-0.5 py-0.5"> -->
-          <v-select id="bank" placeholder="請輸入關鍵字或銀行代碼...">
-          </v-select>
+          <multiselect id="bank" v-model="selectedBank" :options="banks" :close-on-select="true" :clear-on-select="false" placeholder="請輸入關鍵字或銀行代碼...">
+          </multiselect>
           <p class="text-sm text-gray-400 pl-1 mt-1">可使用下拉選單或直接輸入關鍵字查詢</p>
         </div>
-        <div class="flex flex-col mt-2 sm:mt-0 min-w-40">
+        <div class="flex flex-col mt-2 sm:mt-0">
           <label for="branch" class="font-bold pl-1">分行名稱</label>
-          <!-- <v-select id="branch" class="mt-1 block w-full border border-gray-300 rounded-md hover:border-gray-400 focus:border-blue-400 text-lg text-gray-500 px-0.5 py-0.5"> -->
-          <v-select id="branch" placeholder="請選擇分行名稱">
-          </v-select>
+          <multiselect id="branch" v-model="selectedBranch" :options="branches" placeholder="請選擇分行名稱">
+          </multiselect>
         </div>
       </section>
 
