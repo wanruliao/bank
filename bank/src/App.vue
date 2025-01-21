@@ -56,8 +56,12 @@ watch(selectedBranch, async(newBranch) => {
   }
 })
 
-const { copy, copied } = useClipboard({
-  copiedDuring: 1000,
+//將不同複製目的的功能獨立
+const {copy: branchCopy, copied: branchCopied} = useClipboard({
+  copiedDuring: 500,
+});
+const {copy: urlCopy, copied: urlCopied} = useClipboard({
+  copiedDuring: 500,
 });
 
 </script>
@@ -90,7 +94,7 @@ const { copy, copied } = useClipboard({
             </h2>
             <p class="text-xl my-1">
               {{ `分行代碼：${selectedBranch.branchCode}` }}
-              <button @click="copy(selectedBranch.branchCode)" class="ml-2 bg-green-500 hover:bg-green-400 text-green-50 btn">{{ copied ? "已複製" : "複製代碼" }}</button>
+              <button @click="branchCopy(selectedBranch.branchCode)" class="ml-2 bg-green-500 hover:bg-green-400 text-green-50 btn">{{ branchCopied ? "已複製" : "複製代碼" }}</button>
             </p>
             <p class="text-xl my-1">
               {{ `地址：${selectedBranch.address}` }}
@@ -108,8 +112,8 @@ const { copy, copied } = useClipboard({
           <a href="/" class="btn mr-1">
             重新查詢
           </a>
-          <button @click="copy(currentUrl)" class="bg-blue-500 hover:bg-blue-400 text-blue-50 btn">
-            {{ copied ? "已複製" : "複製此頁面連結" }}
+          <button @click="urlCopy(currentUrl)" class="bg-blue-500 hover:bg-blue-400 text-blue-50 btn">
+            {{ urlCopied ? "已複製" : "複製此頁面連結" }}
           </button>
         </footer>
       </section>
