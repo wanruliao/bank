@@ -2,7 +2,9 @@
 import axios from 'axios';
 import { ref, onMounted, watch } from 'vue';
 import { useClipboard } from '@vueuse/core';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const modifiedData = [];
 const banksData = ref([]);
 const selectedBank = ref(null);
@@ -43,6 +45,15 @@ watch(selectedBank, (newBank) => {
     }
   }
 })
+
+watch(selectedBranch, (newBranch) => {
+  if(newBranch){
+    router.push({
+      path: `/${selectedBank.value.bankCode}/${newBranch.branchCode}/${selectedBank.value.name}-${newBranch.name}.html`,
+    });
+  }
+})
+
 const { copy, copied } = useClipboard({
   copiedDuring: 1000,
 });
