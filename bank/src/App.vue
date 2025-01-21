@@ -80,7 +80,9 @@ const {copy: urlCopy, copied: urlCopied} = useClipboard({
         </div>
         <div class="flex flex-col mt-2 sm:mt-0">
           <label for="branch" class="font-bold pl-1">分行名稱</label>
-          <multiselect id="branch" v-model="selectedBranch" :options="branchesData" :custom-label="(option) => `${option.name}`" :selectLabel="''" :deselectLabel="''" :selectedLabel="''" :close-on-select="true" :clear-on-select="false" placeholder="請選擇分行名稱">
+          <multiselect v-if="selectedBank" id="branch" v-model="selectedBranch" :options="branchesData" :custom-label="(option) => `${option.name}`" :selectLabel="''" :deselectLabel="''" :selectedLabel="''" :close-on-select="true" :clear-on-select="false" placeholder="請選擇分行名稱">
+          </multiselect>
+          <multiselect disabled v-else id="branch" v-model="selectedBranch" :options="branchesData" :custom-label="(option) => `${option.name}`" :selectLabel="''" :deselectLabel="''" :selectedLabel="''" :close-on-select="true" :clear-on-select="false" placeholder="請選擇分行名稱">
           </multiselect>
         </div>
       </section>
