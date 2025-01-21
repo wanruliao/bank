@@ -47,12 +47,12 @@ watch(selectedBank, (newBank) => {
   }
 })
 
-watch(selectedBranch, (newBranch) => {
+watch(selectedBranch, async(newBranch) => {
   if(newBranch){
-    router.push({
+    await router.push({
       path: `/${selectedBank.value.bankCode}/${newBranch.branchCode}/${selectedBank.value.name}-${newBranch.name}.html`,
     });
-    currentUrl.value = window.location.href;
+    currentUrl.value = window.location.origin + router.currentRoute.value.fullPath;
   }
 })
 
