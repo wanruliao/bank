@@ -10,6 +10,7 @@ const banksData = ref([]);
 const selectedBank = ref(null);
 const branchesData = ref([]);
 const selectedBranch = ref(null);
+const currentUrl = ref("");
 
 onMounted(async () => {
   const rawData = await axios.get("https://stat.fsc.gov.tw/FSC_OAS3_RESTORE/API/json_EXPORT?TableID=B14");
@@ -51,6 +52,7 @@ watch(selectedBranch, (newBranch) => {
     router.push({
       path: `/${selectedBank.value.bankCode}/${newBranch.branchCode}/${selectedBank.value.name}-${newBranch.name}.html`,
     });
+    currentUrl.value = window.location.href;
   }
 })
 
@@ -106,8 +108,8 @@ const { copy, copied } = useClipboard({
           <a href="/" class="btn mr-1">
             重新查詢
           </a>
-          <button class="bg-blue-500 hover:bg-blue-400 text-blue-50 btn">
-            複製此頁面連結
+          <button @click="copy(currentUrl)" class="bg-blue-500 hover:bg-blue-400 text-blue-50 btn">
+            {{ copied ? "已複製" : "複製此頁面連結" }}
           </button>
         </footer>
       </section>
