@@ -3,7 +3,9 @@ import axios from 'axios';
 import { ref, onMounted, watch } from 'vue';
 import { useClipboard } from '@vueuse/core';
 import { useRouter, useRoute } from 'vue-router';
-import { useRouter } from 'vue-router';
+
+//辨別初始化
+let isInitializing = true;
 
 const router = useRouter();
 const route = useRoute();
@@ -48,12 +50,17 @@ onMounted(async () => {
       };
       branchesData.value.push(newEle);
     }
+    isInitializing = false;
   }
   
 });
 
 //監聽銀行名稱選擇結果，篩選指定分行
 watch(selectedBank, (newBank) => {
+  if(!isInitializing) {
+    isInitializing = true;
+    return;
+  };
   if(newBank){
     branchesData.value = [];
     selectedBranch.value = null;
