@@ -6,8 +6,14 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      name: "home",
+      name: "Home",
       component: AppView,
+    },
+    {
+      path: "/:bankCode/:branchCode/:branchName",
+      name: "BranchDetail",
+      component: AppView,
+      props: true,
     },
   ],
 });

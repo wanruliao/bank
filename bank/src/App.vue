@@ -2,9 +2,11 @@
 import axios from 'axios';
 import { ref, onMounted, watch } from 'vue';
 import { useClipboard } from '@vueuse/core';
+import { useRouter, useRoute } from 'vue-router';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
+const route = useRoute();
 const modifiedData = [];
 const banksData = ref([]);
 const selectedBank = ref(null);
@@ -29,6 +31,25 @@ onMounted(async () => {
 
   //整理銀行名稱資料
   banksData.value = modifiedData.filter((el) => el.branchCode === "");
+
+  // 根據路由參數初始化銀行和分行
+  if (route.params.bankCode && route.params.branchCode) {
+    selectedBank.value = banksData.value.find(bank => bank.bankCode === route.params.bankCode);
+    const branch = modifiedData.find(branch => branch.branchCode === route.params.branchCode);
+    selectedBranch.value = {
+      ...branch,
+      name: branch.name.replace(selectedBank.value.name, "")
+    };
+    const branchesList = modifiedData.filter((el) => el.bankCode === selectedBank.value.bankCode && el.branchCode !== "");
+    for(const ele of branchesList){
+      const newEle = {
+        ...ele,
+        name: ele.name.replace(selectedBank.value.name, "")
+      };
+      branchesData.value.push(newEle);
+    }
+  }
+  
 });
 
 //監聽銀行名稱選擇結果，篩選指定分行
