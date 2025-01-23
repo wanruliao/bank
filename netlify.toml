@@ -1,0 +1,9 @@
+[[redirects]]
+  from="/bankData/api"
+  to = "https://stat.fsc.gov.tw/FSC_OAS3_RESTORE/API/json_EXPORT?TableID=B14"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
