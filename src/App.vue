@@ -3,6 +3,7 @@ import axios from 'axios';
 import { ref, onMounted, watch } from 'vue';
 import { useClipboard } from '@vueuse/core';
 import { useRouter, useRoute } from 'vue-router';
+import rawBankData from '/src/bankData.json';
 
 //辨別初始化
 let isInitializing = true;
@@ -17,8 +18,18 @@ const selectedBranch = ref(null);
 const currentUrl = ref("");
 
 onMounted(async () => {
-  const rawData = await axios.get("https://stat.fsc.gov.tw/FSC_OAS3_RESTORE/API/json_EXPORT?TableID=B14");
-  
+  let rawData;
+  try{
+    rawData = await axios.get(import.meta.env.VITE_BANK_DATA_API, {
+      timeout: 2000,
+    });
+  }
+  catch(err){
+    console.log("Failed to get data from API");
+    console.log("Fall back to local backup data");
+    rawData = rawBankData;
+  }
+
   //初步整理資料
   for(const ele of rawData.data){
     const newEle = {
